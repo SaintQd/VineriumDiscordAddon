@@ -1,0 +1,17 @@
+name: VineriumDiscordAddon
+version: '1.0'
+author: SaintQd
+main: org.saintqd.vineriumdiscordaddon.VineriumDiscordAddon
+description: VineriumDiscordAddon Plugin
+api-version: '1.21.10'
+dependencies:
+  server:
+    VineriumLib:
+      load: BEFORE
+      required: true
+    DiscordSRV:
+      load: BEFORE
+      required: true
+    Vault:
+      load: BEFORE
+      required: false

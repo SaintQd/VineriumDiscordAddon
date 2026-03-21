@@ -1,0 +1,57 @@
+Language: ru_ru
+RequiredRoles:
+  - '1368916304463007889'
+Auth:
+  Enabled: true
+GeoIP:
+  Format: "{CITY}, {COUNTRY}"
+  LicenseKey: "P5g0fVdAQIq8yQau"
+  UpdateInterval: 1209600000
+  DBCityDownload: "https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-City&license_key={LICENSE_KEY}&suffix=tar.gz"
+  DBCountryDownload: "https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-Country&license_key={LICENSE_KEY}&suffix=tar.gz"
+  Locale: "en"
+Buttons:
+  TimeUntilDeletion: 180
+  EnableNoButton: false
+  ReverseLayout: false
+Session:
+  DeleteMessagesOnDisable: true
+  ChannelName: linking
+  UnconfirmedExpireTime: 180000
+  ExpireTime: 259200000
+Logging:
+  LinkedMessageChannelName: 'bot-logs'
+  JoinConfirmMessageChannelName: 'bot-logs'
+PlayerListMessage:
+  Enabled: false
+  Formats:
+    - 'list'
+  DeleteAfter: 30000
+  Groups:
+    - 'Админ,**Администраторы**'
+    - 'Модератор,**Модераторы**'
+    - 'Ягодка,**Ягодки**'
+    - 'default,**Игроки**'
+ReplyMessageEdit:
+  Enabled: true
+  Regex: "(отвечая на Vinerium)"
+  ReplaceText: "(отвечая на *)"
+  NameSubstring: " •"
+Commands:
+  Mute:
+    Enabled: true
+    RequiredRole: '1368911823469936791'
+    Command: "mute {1} {2} {3}"
+  Unmute:
+    Enabled: true
+    RequiredRole: '1368911823469936791'
+    Command: "unmute {1} {2}"
+  Upload:
+    Enabled: false
+    RequiredRole: '1368908854531981364'
+    AllowedPaths:
+      - 'plugins/VineriumCore'
+MessageFilter:
+  Enabled: true
+  Regex:
+    - '[ꐙꐔꐒꐓꐕꐐꐑ᠀ᘐ҂ォ୭⩩⇴㚼⼓⏍ꗃ૪⟆ᦔリ꒰⩇↹୭ରୁ୦ದಷಸಬನರಣಹಗಪಶೋಳುೀ水小漢对頁字海陆美도연강대낮ꐖꐗꐘꐚꐛꐜꐝꐞꐟꐠꐡꐢꐣꐤꐥꐦꐧꐨꐩꐪ]'

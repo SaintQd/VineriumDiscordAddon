@@ -1,0 +1,14 @@
+name: VineriumDiscordAddon
+version: '1.0'
+author: SaintQd
+main: org.saintqd.vineriumdiscordaddon.VineriumDiscordAddon
+api-version: 1.21.8
+depend:
+  - VineriumLib
+  - DiscordSRV
+softdepend:
+  - Vault
+permissions:
+  vineriumdiscord.admin:
+    description: Access to admin commands.
+    default: op
