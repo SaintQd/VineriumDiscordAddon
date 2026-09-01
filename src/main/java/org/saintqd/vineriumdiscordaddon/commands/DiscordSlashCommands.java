@@ -16,7 +16,6 @@ import org.bukkit.OfflinePlayer;
 import org.saintqd.vineriumdiscordaddon.VineriumDiscordAddon;
 import org.saintqd.vineriumlib.VineriumLib;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -42,10 +41,6 @@ public class DiscordSlashCommands implements SlashCommandProvider {
                     .addOption(OptionType.USER, "user", VineriumLib.inst().getLangManager().getLangLines().get(Key.key(VineriumDiscordAddon.inst(), "command_mute_hint_user")), true)
                     .addOption(OptionType.STRING, "reason", VineriumLib.inst().getLangManager().getLangLines().get(Key.key(VineriumDiscordAddon.inst(), "command_mute_hint_reason")), false));
         }
-        if (VineriumDiscordAddon.inst().getConfig().getBoolean("Commands.Upload",false)) {
-            commands.add(new CommandData("upload", VineriumLib.inst().getLangManager().getLangLines().get(Key.key(VineriumDiscordAddon.inst(), "command_upload_hint")))
-                    .addOption(OptionType.STRING, "path", VineriumLib.inst().getLangManager().getLangLines().get(Key.key(VineriumDiscordAddon.inst(), "command_upload_hint_path")), true));
-        }
 
         return commands.stream().map(each -> new PluginSlashCommand(VineriumDiscordAddon.inst(),each,guild.getId())).collect(Collectors.toSet());
     }
@@ -53,6 +48,8 @@ public class DiscordSlashCommands implements SlashCommandProvider {
     @SlashCommand(path = "*")
     public void onSlashCommand(SlashCommandEvent event) {
         Guild guild = DiscordSRV.getPlugin().getMainGuild();
+        if (guild == null || event.getGuild() == null)
+            return;
         if (event.getGuild().getIdLong() != guild.getIdLong()) {
             return;
         }
@@ -84,13 +81,13 @@ public class DiscordSlashCommands implements SlashCommandProvider {
                         return;
                     }
                     User user = event.getOption("user").getAsUser();
-                    UUID uuid = DiscordSRV.getPlugin().getAccountLinkManager().getUuidBypassCache(user.getId());
+                    UUID uuid = DiscordSRV.getPlugin().getAccountLinkManager().getUuid(user.getId());
                     if (uuid == null) {
                         event.reply(VineriumLib.inst().getLangManager().getLangLines().get(Key.key(VineriumDiscordAddon.inst(), "command_no_user"))).setEphemeral(true).queue();
                         return;
                     }
                     OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(uuid);
-                    if (!offlinePlayer.hasPlayedBefore()) {
+                    if (!offlinePlayer.hasPlayedBefore() && !offlinePlayer.isOnline()) {
                         event.reply(VineriumLib.inst().getLangManager().getLangLines().get(Key.key(VineriumDiscordAddon.inst(), "command_no_user"))).setEphemeral(true).queue();
                         return;
                     }
@@ -128,13 +125,13 @@ public class DiscordSlashCommands implements SlashCommandProvider {
                         return;
                     }
                     User user = event.getOption("user").getAsUser();
-                    UUID uuid = DiscordSRV.getPlugin().getAccountLinkManager().getUuidBypassCache(user.getId());
+                    UUID uuid = DiscordSRV.getPlugin().getAccountLinkManager().getUuid(user.getId());
                     if (uuid == null) {
                         event.reply(VineriumLib.inst().getLangManager().getLangLines().get(Key.key(VineriumDiscordAddon.inst(), "command_no_user"))).setEphemeral(true).queue();
                         return;
                     }
                     OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(uuid);
-                    if (!offlinePlayer.hasPlayedBefore()) {
+                    if (!offlinePlayer.hasPlayedBefore() && !offlinePlayer.isOnline()) {
                         event.reply(VineriumLib.inst().getLangManager().getLangLines().get(Key.key(VineriumDiscordAddon.inst(), "command_no_user"))).setEphemeral(true).queue();
                         return;
                     }
@@ -153,56 +150,6 @@ public class DiscordSlashCommands implements SlashCommandProvider {
                         event.reply(parsedMessage).setEphemeral(true).queue();
                     else
                         event.reply(parsedMessage).queue();
-                }
-                case "upload" -> {
-                    boolean hasRole = false;
-                    String requiredRole = VineriumDiscordAddon.inst().getConfig().getString("Commands.Upload.RequiredRole", "");
-                    if (requiredRole.isEmpty())
-                        hasRole = true;
-                    else {
-                        for (Role role : event.getMember().getRoles()) {
-                            if (role.getId().equals(requiredRole)) {
-                                hasRole = true;
-                                break;
-                            }
-                        }
-                    }
-                    if (!hasRole) {
-                        event.reply(VineriumLib.inst().getLangManager().getLangLines().get(Key.key(VineriumDiscordAddon.inst(), "command_no_role"))).setEphemeral(true).queue();
-                        return;
-                    }
-                    String path = event.getOption("path").getAsString();
-                    boolean pathIsAllowed = false;
-                    for (String possiblePath : VineriumDiscordAddon.inst().getConfig().getStringList("Commands.Upload.AllowedPaths")) {
-                        if (path.startsWith(possiblePath)) {
-                            pathIsAllowed = true;
-                            break;
-                        }
-                    }
-                    if (!pathIsAllowed) {
-                        event.reply(VineriumLib.inst().getLangManager().getLangLines().get(Key.key(VineriumDiscordAddon.inst(), "command_upload_path_is_not_allowed"))).setEphemeral(true).queue();
-                        return;
-                    }
-                    List<Message> messages = event.getChannel().getHistory().retrievePast(1).complete();
-                    if (!messages.isEmpty()) {
-                        Message message = messages.getFirst();
-                        List<Message.Attachment> attachments = message.getAttachments();
-                        if (!attachments.isEmpty()) {
-                            Message.Attachment attachment = attachments.getFirst();
-                            attachment.downloadToFile(new File(path));
-                            String successText = VineriumLib.inst().getLangManager().getLangLines()
-                                    .get(Key.key(VineriumDiscordAddon.inst(), "command_upload_success")).replace("{1}", path);
-                            event.reply(successText).setEphemeral(true).queue();
-                        }
-                        else {
-                            event.reply(VineriumLib.inst().getLangManager().getLangLines().get(Key.key(VineriumDiscordAddon.inst(), "command_upload_no_attachments"))).setEphemeral(true).queue();
-                            return;
-                        }
-                    }
-                    else {
-                        event.reply(VineriumLib.inst().getLangManager().getLangLines().get(Key.key(VineriumDiscordAddon.inst(), "command_upload_no_messages"))).setEphemeral(true).queue();
-                        return;
-                    }
                 }
             }
         }

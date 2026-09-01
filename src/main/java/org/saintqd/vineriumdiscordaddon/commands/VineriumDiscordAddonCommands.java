@@ -283,7 +283,7 @@ public class VineriumDiscordAddonCommands {
                                                         });
                                                         return builder.buildFuture();
                                                     })
-                                                    .then(Commands.argument("actorPlayerName", StringArgumentType.word())
+                                                    .then(Commands.argument("actorPlayerName", StringArgumentType.string())
                                                             .suggests((ctx,builder) -> {
                                                                 Bukkit.getOnlinePlayers().forEach((player) -> {
                                                                     builder.suggest(player.getName());
@@ -544,6 +544,11 @@ public class VineriumDiscordAddonCommands {
     }
 
     private static void broadcastEmbedMessage(CommandSender sender, String channelName, NamespacedKey messageFormat, String actorPlayerName, String args) {
+
+        if (!VineriumDiscordAddon.inst().getMessageFormatManager().getMessageFormats().containsKey(messageFormat)) {
+            sender.sendMessage(VineriumLib.inst().getLangManager().parseLangString(VineriumDiscordAddon.inst(),"command_broadcast_no_message_format"));
+            return;
+        }
 
         String[] argsSplit = args.split(";");
         OfflinePlayer actorPlayer = Bukkit.getOfflinePlayer(actorPlayerName);

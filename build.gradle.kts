@@ -16,8 +16,8 @@ repositories {
 }
 
 dependencies {
-    compileOnly("io.papermc.paper:paper-api:1.21.8-R0.1-SNAPSHOT")
-    compileOnly("com.discordsrv:discordsrv:1.30.2")
+    compileOnly("io.papermc.paper:paper-api:1.21.11-R0.1-SNAPSHOT")
+    compileOnly("com.discordsrv:discordsrv:1.30.5")
     compileOnly(files("../VineriumLib/build/libs/VineriumLib-1.0-SNAPSHOT.jar"))
     compileOnly("com.github.MilkBowl:VaultAPI:1.7.1")
     implementation("org.apache.commons:commons-compress:1.28.0")
@@ -42,5 +42,5 @@ tasks.withType<Jar> {
 
 }
 java {
-    toolchain.languageVersion.set(JavaLanguageVersion.of(21))
+    toolchain.languageVersion.set(JavaLanguageVersion.of(25))
 }

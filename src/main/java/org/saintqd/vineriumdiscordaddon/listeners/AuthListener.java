@@ -78,7 +78,7 @@ public class AuthListener implements Listener {
 
         plugin.getSocialManager().addButtonEvent(ASK_NO_BTN, (event,id, buttonId) -> {
 
-            UUID uuid = DiscordSRV.getPlugin().getAccountLinkManager().getUuidBypassCache(Long.toString(id));
+            UUID uuid = DiscordSRV.getPlugin().getAccountLinkManager().getUuid(Long.toString(id));
             if (uuid == null) {
                 String denyMessage = VineriumLib.inst().getLangManager()
                         .getLangLines().getOrDefault(Key.key(VineriumDiscordAddon.inst(),"button_deny"),"button_deny");
@@ -104,7 +104,7 @@ public class AuthListener implements Listener {
 
         plugin.getSocialManager().addButtonEvent(ASK_YES_BTN, (event,id, buttonId) -> {
 
-            UUID uuid = DiscordSRV.getPlugin().getAccountLinkManager().getUuidBypassCache(Long.toString(id));
+            UUID uuid = DiscordSRV.getPlugin().getAccountLinkManager().getUuid(Long.toString(id));
             if (uuid == null) {
                 String denyMessage = VineriumLib.inst().getLangManager()
                         .getLangLines().getOrDefault(Key.key(VineriumDiscordAddon.inst(),"button_deny"),"button_deny");

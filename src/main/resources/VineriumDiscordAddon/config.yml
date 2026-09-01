@@ -5,7 +5,7 @@ Auth:
   Enabled: true
 GeoIP:
   Format: "{CITY}, {COUNTRY}"
-  LicenseKey: "P5g0fVdAQIq8yQau"
+  LicenseKey: ""
   UpdateInterval: 1209600000
   DBCityDownload: "https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-City&license_key={LICENSE_KEY}&suffix=tar.gz"
   DBCountryDownload: "https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-Country&license_key={LICENSE_KEY}&suffix=tar.gz"
@@ -37,6 +37,16 @@ ReplyMessageEdit:
   Regex: "(отвечая на Vinerium)"
   ReplaceText: "(отвечая на *)"
   NameSubstring: " •"
+MuteOfllinePlayers:
+  Enabled: true
+  MaxLastSeenTime: 604800000
+  MuteRoleId: '1453045832202063902'
+  DeleteMessageIfPlayerNotFound: true
+  BypassRoles:
+    - '1368908854531981364'
+    - '1368911823469936791'
+    - '1387412298569617419'
+  MuteTime: 1800000
 Commands:
   Mute:
     Enabled: true

@@ -2,12 +2,10 @@ package org.saintqd.vineriumdiscordaddon.social;
 
 import github.scarsz.discordsrv.DiscordSRV;
 import github.scarsz.discordsrv.dependencies.jda.api.JDA;
-import github.scarsz.discordsrv.dependencies.jda.api.entities.Member;
 import github.scarsz.discordsrv.dependencies.jda.api.entities.Role;
 import github.scarsz.discordsrv.dependencies.jda.api.entities.TextChannel;
 import github.scarsz.discordsrv.dependencies.jda.api.entities.User;
 import github.scarsz.discordsrv.dependencies.jda.api.events.interaction.ButtonClickEvent;
-import github.scarsz.discordsrv.dependencies.jda.api.events.message.MessageReceivedEvent;
 import github.scarsz.discordsrv.dependencies.jda.api.hooks.ListenerAdapter;
 import github.scarsz.discordsrv.dependencies.jda.api.interactions.components.ActionRow;
 import github.scarsz.discordsrv.dependencies.jda.api.interactions.components.Button;

@@ -6,6 +6,7 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.plugin.Plugin;
 import org.saintqd.vineriumdiscordaddon.VineriumDiscordAddon;
 import org.saintqd.vineriumlib.VineriumLib;
 import org.saintqd.vineriumlib.utils.VinUtils;
@@ -22,7 +23,7 @@ public class RoleManager {
     private final HashMap<String,HashMap<String,Long>> tempAddedRoleData = new HashMap<>();
     private final HashMap<String,HashMap<String,Long>> tempRemovedRoleData = new HashMap<>();
 
-    public HashMap<String, HashMap<String,Long>> getTempAddedRoleData() {
+    public HashMap<String, HashMap<String, Long>> getTempAddedRoleData() {
         return tempAddedRoleData;
     }
 

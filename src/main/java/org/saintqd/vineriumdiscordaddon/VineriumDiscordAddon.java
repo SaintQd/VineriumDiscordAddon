@@ -68,9 +68,6 @@ public class VineriumDiscordAddon extends JavaPlugin {
 
         discordSRVListener = new DiscordSRVListener();
         DiscordSRV.api.subscribe(discordSRVListener);
-
-        DiscordSRV.api.addSlashCommandProvider(new DiscordSlashCommands());
-        DiscordSRV.api.updateSlashCommands();
     }
 
     @Override
